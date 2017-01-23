@@ -2,22 +2,17 @@ import domain.ApacheAccessLog
 import org.apache.spark.SparkConf
 import org.apache.spark.api.java.JavaRDD
 import org.apache.spark.api.java.JavaSparkContext
-import scala.Tuple2
+import service.LogAnalyzerService
 import util.LogParseUtils
 
-/**
- * Created by Aliaksei_Stadnik on 12/27/2016.
- */
 class LogAnalyzer {
-
-  static def SUM_REDUCER = {a,b -> a + b}
 
   static void main(String[] args) {
 
     def conf = new SparkConf().setAppName("Log Analyzer").setMaster("local")
     def sc = new JavaSparkContext(conf)
 
-    def logsFolder = System.getProperty("logs.file")
+    def logsFolder = System.getProperty("logs.file") //"C:\\Users\\Aliaksei_Stadnik\\Desktop\\RudderLogs\\caselaw.log"
 
     if (!logsFolder) {
       throw new RuntimeException("Please specify logs.file property")
@@ -29,14 +24,7 @@ class LogAnalyzer {
         logLines.map({ log -> LogParseUtils.parseFromLogLine(log) }).cache();
 
 
-    def ipAddresses =
-        accessLogs
-            .filter {log -> log.responseCode != 200}
-            .mapToPair { log -> new Tuple2(log.endpoint, 1L) }
-            .reduceByKey(SUM_REDUCER)
-            .take(100)
-
-    println ipAddresses.join("\n")
+    println LogAnalyzerService.FIND_EXACT_RESPONSE(accessLogs, 200)
 
 
   }
