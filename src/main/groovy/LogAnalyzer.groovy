@@ -12,7 +12,7 @@ class LogAnalyzer {
     def conf = new SparkConf().setAppName("Log Analyzer").setMaster("local")
     def sc = new JavaSparkContext(conf)
 
-    def logsFolder = System.getProperty("logs.file") //"C:\\Users\\Aliaksei_Stadnik\\Desktop\\RudderLogs\\caselaw.log"
+    def logsFolder = System.getProperty("logs.file")
 
     if (!logsFolder) {
       throw new RuntimeException("Please specify logs.file property")
@@ -24,7 +24,7 @@ class LogAnalyzer {
         logLines.map({ log -> LogParseUtils.parseFromLogLine(log) }).cache();
 
 
-    println LogAnalyzerService.FIND_EXACT_RESPONSE(accessLogs, 200)
+    println LogAnalyzerService.FIND_POPULAR_ENDPOINTS(accessLogs, 10)
 
 
   }
