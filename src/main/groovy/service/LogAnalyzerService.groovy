@@ -18,4 +18,13 @@ class LogAnalyzerService {
                         .take(100)
         ipAddresses
     }
+
+    static FIND_POPULAR_ENDPOINTS = { JavaRDD<ApacheAccessLog> accessLogs, int times ->
+        def ipAddresses =
+                accessLogs.mapToPair { log -> new Tuple2<>(log.ipAddress, 1L)}
+                        .reduceByKey(SUM_REDUCER)
+                        .filter { tuple -> tuple._2() > 10 }
+                        .map{ tuple -> tuple._1 }
+                        .take(100)
+    }
 }
