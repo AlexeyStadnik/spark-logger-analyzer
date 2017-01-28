@@ -1,4 +1,4 @@
-package domain
+package com.stadnik.domain
 
 import groovy.transform.Canonical
 import groovy.transform.EqualsAndHashCode

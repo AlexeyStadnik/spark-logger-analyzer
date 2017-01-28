@@ -1,6 +1,6 @@
-package service
+package com.stadnik.service
 
-import domain.ApacheAccessLog
+import com.stadnik.domain.ApacheAccessLog
 import org.apache.spark.api.java.JavaRDD
 import scala.Tuple2
 

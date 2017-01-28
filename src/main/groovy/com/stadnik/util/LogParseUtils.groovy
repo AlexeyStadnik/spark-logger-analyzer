@@ -1,6 +1,6 @@
-package util
+package com.stadnik.util
 
-import domain.ApacheAccessLog
+import com.stadnik.domain.ApacheAccessLog
 
 import java.util.regex.Matcher
 import java.util.regex.Pattern
